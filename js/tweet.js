@@ -1,5 +1,8 @@
 var count = 140;
 
+
+//when focused on tweet box it will increase in size and buttons show up//
+
 $(document).ready(function() {
 	$("#tweet-content > .tweet-compose").focus(function() {
 	//$(".tweet-compose").focus(function() {
@@ -9,6 +12,8 @@ $(document).ready(function() {
 		//$("this").height("8em");
 	});
 
+
+// when focus moves away from tweet box then it will minimize again, UNLESS there is text in the box//
 
 $(".tweet-compose").focusout(function() {
 	if (count === 140) {
@@ -21,7 +26,8 @@ $(".tweet-compose").focusout(function() {
 
 
 
-//creating counter - changing to red//
+//when tweet box has text the counter will change with each INPUT.  if count is more than 10 is stays grey, less than or equal to 10 turns red//
+//the button is disabled when count is less than 0 and re-enalbed when goes back abobe 0//
 
 $(".tweet-compose").on("input", function() { 
 	var length = $(".tweet-compose").val().length;
@@ -31,46 +37,45 @@ $(".tweet-compose").on("input", function() {
 		if (count > 10) {
 			$("#char-count").css("color", "#999");
 		}
-		else if (0 < count <=10) {
+		else if (count <=10) {
 			$("#char-count").css("color", "red");
+		};
+		
+		if (count < 0) {
+			$('.button').attr('disabled', 'true')
 		}
-		//else {
-		//	$("#tweet-submit").css({"opacity": "0.5"});
-			//preventdefault
-		//}
+		else if (count >= 0) {
+			$('.button').removeAttr('disabled')
+		};
 });
 
 
 
-// going over 140 characters//
-
-// $("#tweet-compose").on("keyup", function() {
-// 	var length = $(".tweet-compose").val().length;
-// 	// var count = 140 - length;
-// 	// 	console.log(count);
-// 	// 	$("#char-count").text(count);
-// 	//	if (count > 140) {
-// 	//	if (length > 140) {
-// 			$("#tweet-submit").css("opacity", "0.5");
-// 		};
-// });
 
 
-// submitting tweet //
+// new var tweetText gets the value of the text entered in the tweetbox.  var newTweet gets the tweet element from the stream element and identifies the first entry(so you dont get all the twitter entries) and then clones the html.   //
+
+// jquery $(newTweet).find("p").first().text(tweetText); finds the FIRST paragraph in the html from the var newTweet and changes the text to the value of var tweetText//
+
+// jquery $("#stream").prepend(newTweet); adds the new paragraph (and cloned html) from var newTweet in front of the current #stream element//
 
 $("#tweet-submit").on('click', function() {
 	var tweetText = $(".tweet-compose").val();
-
-	// var newTweet = "<div class="tweet"><div class="content"><img class="avatar" src="img/funwatercat.jpg" /><strong class="fullname">The Onion</strong><span class="username">@theonion</span><p class="tweet-text"><div class="tweet-actions">
-
-	// </div></p></div></div>"
-
-	var newTweet = '<div class="tweet"><div class="content"><img class="avatar" src="img/funwatercat.jpg" /><strong class="fullname"></strong><span class="username"></span><p class="tweet-text">' + tweetText + '</p><div class="tweet-actions"><ul><li><span class="icon action-reply"></span> Reply</li><li><span class="icon action-retweet"></span> Retweet</li> <li><span class="icon action-favorite"></span> Favorite</li> <li><span class="icon action-more"></span> More</li> </ul> </div> <div class="stats"> <div class="retweets"> <p class="num-retweets">30</p> <p>RETWEETS</p> </div> <div class="favorites"> <p class="num-favorites">6</p> <p>FAVORITES</p> </div> <div class="users-interact"> <div> <img src="img/jennyshen.jpg" /> <img src="img/damenleeturks.jpg" /> </div> </div> <div class="time"> 1:04 PM - 19 Sep 13 </div> </div> <div class="reply"> <img class="avatar" src="img/alagoon.jpg" /> <textarea class="tweet-compose" placeholder="Reply to @mybff"/></textarea> </div> </div> </div>'
-
+	var newTweet = $("#stream .tweet").first().clone();
+	$(newTweet).find("p").first().text(tweetText);
 	$("#stream").prepend(newTweet);
 
 	
 });
+
+// tweet actions (reply, retweet, favorite, more) only show up when you hover over that tweet//
+
+// $(".tweet-actions").hide();
+// $('.tweet').hover(function() {
+	//$(this).find('.tweet-actions').toggle();
+// 	$('.tweet-actions').toggle();
+// });
+//  %('.tweet-actions').hover()
 
 
 

@@ -166,9 +166,16 @@ body {
 		padding-left: 42px;
 	}
 
+
 	.tweet-actions {
 		text-align: right;
+		visibility: hidden;  /* making tweet-actions hidden */
 	}
+
+	.tweet:hover .tweet-actions {
+		visibility: visible;   /* making tweet-actions visible when hovering over tweet */
+	}s
+
 		.tweet-actions ul {
 			list-style-type: none;
 		}
