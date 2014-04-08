@@ -1,11 +1,12 @@
-var count = 140;
+
 
 
 //when focused on tweet box it will increase in size and buttons show up//
 
 $(document).ready(function() {
-	$("#tweet-content > .tweet-compose").focus(function() {
-	//$(".tweet-compose").focus(function() {
+	var count = 140;
+	$("#tweet-content").on("focusin", ".tweet-compose", function() {
+		//$(".tweet-compose").focus(function() {
 		$("#tweet-controls").show();
 		//$(".tweet-compose").css("height", "8em")
 		$(this).css("height", "8em")
@@ -15,12 +16,21 @@ $(document).ready(function() {
 
 // when focus moves away from tweet box then it will minimize again, UNLESS there is text in the box//
 
-$(".tweet-compose").focusout(function() {
-	if (count === 140) {
-		$("#tweet-controls").hide();
-		$(".tweet-compose").css("height", "2.5em");
-	}
-});
+	$(".tweet-compose").focusout(function() {
+		if (count === 140) {
+			$("#tweet-controls").hide();
+			$(".tweet-compose").css("height", "2.5em");
+		}
+	});
+
+	$('#stream').on('click', ".tweet", function(event) {
+		var tweet = $(event.currentTarget);
+		var reply = tweet.find(".reply");
+		reply.show();
+		var stats = tweet.find(".stats");
+		stats.show();
+	})
+
 
 
 
@@ -29,25 +39,25 @@ $(".tweet-compose").focusout(function() {
 //when tweet box has text the counter will change with each INPUT.  if count is more than 10 is stays grey, less than or equal to 10 turns red//
 //the button is disabled when count is less than 0 and re-enalbed when goes back abobe 0//
 
-$(".tweet-compose").on("input", function() { 
-	var length = $(".tweet-compose").val().length;
-	count = 140 - length;
-		console.log(count);
-		$("#char-count").text(count);
-		if (count > 10) {
-			$("#char-count").css("color", "#999");
-		}
-		else if (count <=10) {
-			$("#char-count").css("color", "red");
-		};
-		
-		if (count < 0) {
-			$('.button').attr('disabled', 'true')
-		}
-		else if (count >= 0) {
-			$('.button').removeAttr('disabled')
-		};
-});
+	$(".tweet-compose").on("input", function() { 
+		var length = $(".tweet-compose").val().length;
+		count = 140 - length;
+			console.log(count);
+			$("#char-count").text(count);
+			if (count > 10) {
+				$("#char-count").css("color", "#999");
+			}
+			else if (count <=10) {
+				$("#char-count").css("color", "red");
+			};
+			
+			if (count < 0) {
+				$('.button').attr('disabled', 'true')
+			}
+			else if (count >= 0) {
+				$('.button').removeAttr('disabled')
+			};
+	});
 
 
 
@@ -59,14 +69,14 @@ $(".tweet-compose").on("input", function() {
 
 // jquery $("#stream").prepend(newTweet); adds the new paragraph (and cloned html) from var newTweet in front of the current #stream element//
 
-$("#tweet-submit").on('click', function() {
-	var tweetText = $(".tweet-compose").val();
-	var newTweet = $("#stream .tweet").first().clone();
-	$(newTweet).find("p").first().text(tweetText);
-	$("#stream").prepend(newTweet);
-
-	
-});
+	$("#tweet-submit").on('click', function() {
+		var tweetText = $(".tweet-compose").val();
+		var newTweet = $("#stream .tweet").first().clone();
+		$(newTweet).find("p").first().text(tweetText);
+		$("#stream").prepend(newTweet);
+		$(newTweet).find('.reply').hide();
+		$(newTweet).find('.stats').hide();	
+	});
 
 // tweet actions (reply, retweet, favorite, more) only show up when you hover over that tweet//
 
