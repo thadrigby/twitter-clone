@@ -61,7 +61,7 @@ $(document).ready(function() {
 		var tweetText = $(".tweet-compose").val();
 		var newTweet = $("#stream .tweet").first().clone();
 		$(newTweet).find("p").first().text(tweetText);
-		$(newTweet).find(".avatar").attr("src", 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQIhO6144v7xqoblGEElYIi1CjZKYNvtf6B9JTW6sYmd48dGIH5A');
+		$(newTweet).find(".avatar").attr("src", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQIhO6144v7xqoblGEElYIi1CjZKYNvtf6B9JTW6sYmd48dGIH5A");
 		$(newTweet).find(".fullname").text("RADNESS!");
 		$(newTweet).find(".username").text("@totallyRAD");
 		$("#stream").prepend(newTweet);
