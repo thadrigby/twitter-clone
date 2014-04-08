@@ -23,18 +23,6 @@ $(document).ready(function() {
 		}
 	});
 
-	$('#stream').on('click', ".tweet", function(event) {
-		var tweet = $(event.currentTarget);
-		var reply = tweet.find(".reply");
-		reply.show();
-		var stats = tweet.find(".stats");
-		stats.show();
-	})
-
-
-
-
-
 
 //when tweet box has text the counter will change with each INPUT.  if count is more than 10 is stays grey, less than or equal to 10 turns red//
 //the button is disabled when count is less than 0 and re-enalbed when goes back abobe 0//
@@ -73,9 +61,15 @@ $(document).ready(function() {
 		var tweetText = $(".tweet-compose").val();
 		var newTweet = $("#stream .tweet").first().clone();
 		$(newTweet).find("p").first().text(tweetText);
+		$(newTweet).find(".avatar").attr("src", 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQIhO6144v7xqoblGEElYIi1CjZKYNvtf6B9JTW6sYmd48dGIH5A');
+		$(newTweet).find(".fullname").text("RADNESS!");
+		$(newTweet).find(".username").text("@totallyRAD");
 		$("#stream").prepend(newTweet);
 		$(newTweet).find('.reply').hide();
 		$(newTweet).find('.stats').hide();	
+		$("#tweet-controls").hide();
+		$(".tweet-compose").css("height", "2.5em");
+		$("textarea").val('');
 	});
 
 // tweet actions (reply, retweet, favorite, more) only show up when you hover over that tweet//
@@ -89,6 +83,15 @@ $(document).ready(function() {
 
 
 
+
+
+	$('#stream').on('click', ".tweet", function(event) {
+		var tweet = $(event.currentTarget);
+		var reply = tweet.find(".reply");
+		reply.show();
+		var stats = tweet.find(".stats");
+		stats.show();
+	})
 
 
 
