@@ -5,6 +5,8 @@
 
 $(document).ready(function() {
 	var count = 140;
+	var tweetText = $(".tweet-compose").val();
+	var newTweet = $("#stream .tweet").first().clone();
 	$("#tweet-content").on("focusin", ".tweet-compose", function() {
 		//$(".tweet-compose").focus(function() {
 		$("#tweet-controls").show();
@@ -70,6 +72,8 @@ $(document).ready(function() {
 		$("#tweet-controls").hide();
 		$(".tweet-compose").css("height", "2.5em");
 		$("textarea").val('');
+		$("#char-count").text('140');
+		$("#char-count").css('color', '#999');
 	});
 
 // tweet actions (reply, retweet, favorite, more) only show up when you hover over that tweet//
@@ -88,10 +92,22 @@ $(document).ready(function() {
 	$('#stream').on('click', ".tweet", function(event) {
 		var tweet = $(event.currentTarget);
 		var reply = tweet.find(".reply");
-		reply.show();
+		reply.toggle();
 		var stats = tweet.find(".stats");
-		stats.show();
-	})
+		stats.toggle();
+		if ($('#stream .tweet-compose').on('click')) {
+			
+
+			// $(reply).find('.reply').show();
+		 // 	$(stats).find('.stats').show();
+		}
+
+
+		// if $((event.currentTarget).hasClass('.tweet-compose')) {
+		// 	$(newTweet).find('.reply').show();
+		// 	$(newTweet).find('.stats').show();
+		// };
+	});
 
 
 
